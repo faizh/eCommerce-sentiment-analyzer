@@ -3,7 +3,7 @@
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Data Latih</h6>
+                            <h6 class="mb-4">Hasil Uji Naivebayes</h6>
                             <div class="table-responsive">
                                 <table class="table" id="example">
                                     <thead>
@@ -14,21 +14,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>John</td>
-                                            <td>John</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>John</td>
-                                            <td>Mark</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>John</td>
-                                            <td>Jacob</td>
-                                        </tr>
+                                        <?php 
+                                            if (count($data_uji) == 0) { ?>
+                                                <tr>
+                                                    <td style="text-align: center;" colspan="2">No Data</td>
+                                                </tr>
+                                            <?php }else{
+                                                foreach ($data_uji as $tweet) {
+                                                    if ($tweet->sentiment != $tweet->naive_bayes_analysis) {
+                                                        $class = "warning";
+                                                    }else{
+                                                        $class = "success";
+                                                    }
+                                                 ?>
+                                                    <tr>
+                                                        <td><?= $tweet->clean_tweet ?></td>
+                                                        <td><?= $tweet->sentiment ?></td>
+                                                        <td><button class="btn btn-<?= $class ?>"><?= $tweet->naive_bayes_analysis ?></button></td>
+                                                    </tr>
+                                            <?php }
+                                            } 
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

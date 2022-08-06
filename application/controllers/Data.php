@@ -254,6 +254,7 @@ class Data extends CI_Controller {
 
 		$presentase_data_uji = $this->input->post('presentase_data_uji');
 
+		$this->m_data->delete_all();
 		$this->m_data_uji->delete_all();
 		$random_tweets = $this->m_data_tweets->getRandomTweets($presentase_data_uji);
 
@@ -267,7 +268,7 @@ class Data extends CI_Controller {
 			$this->m_data_uji->insert($data_uji);
 		}
 
-		$this->m_data->update_presentase($presentase_data_uji);
+		$this->m_data->insert(array("presentase_data_uji" => $presentase_data_uji));
 
 		redirect('data/data_uji');
 	}

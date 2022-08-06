@@ -1,5 +1,7 @@
 <?php
 ini_set('max_execution_time', 0);
+set_time_limit(0);
+error_reporting(0);
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Data extends CI_Controller {
@@ -58,7 +60,12 @@ class Data extends CI_Controller {
 
 	public function hasil_uji()
 	{
-		$result 	= file_get_contents('http://127.0.0.1:4996/analyzeNaiveBayes');
+		$ctx = stream_context_create(array('http'=>
+		    array(
+		        'timeout' => 1200,  //1200 Seconds is 20 Minutes
+		    )
+		));
+		$result 	= file_get_contents('http://127.0.0.1:4996/analyzeNaiveBayes', false, $ctx);
 		$response 	= json_decode($result);
 
 		$this->load->model('m_data_uji');

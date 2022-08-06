@@ -45,6 +45,11 @@
                                             <th colspan="4">Akurasi Naivebayes : <?=  $data_tweets['accuracy'] * 100 ?>%</th>
                                         </tr>
                                     </tfoot> -->
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="4">Akurasi Naivebayes : <?=  $data_tweets['accuracy'] * 100 ?>%</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>

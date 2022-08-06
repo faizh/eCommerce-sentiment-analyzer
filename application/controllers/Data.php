@@ -1,6 +1,5 @@
 <?php
 ini_set('max_execution_time', 0);
-error_reporting(0);
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Data extends CI_Controller {
@@ -271,5 +270,61 @@ class Data extends CI_Controller {
 		$this->m_data->update_presentase($presentase_data_uji);
 
 		redirect('data/data_uji');
+	}
+
+	public function get_tweets()
+	{
+		$start_date 	= $this->input->post('start_date');
+		$end_date 		= $this->input->post('end_date');
+
+		// converted to standard date twitter api
+		$start_date 	= new DateTime($start_date.' 00:00:00');
+		$end_date 		= new DateTime($end_date.' 00:00:00');
+		$start_date 	= $start_date->format('Y-m-d\TH:i:s\Z');
+		$end_date 		= $end_date->format('Y-m-d\TH:i:s\Z');
+
+		$data_tweets 	= $this->get_data_tweet($start_date, $end_date);
+
+		if (count($data_tweets) > 0) {
+			$delimiter = "|"; 
+		    $filename = "tweets_" . $start_date . " - " . $end_date .".csv"; 
+		     
+		    // Create a file pointer 
+		    $f = fopen('php://memory', 'w'); 
+		     
+		    // Set column headers 
+		    $fields = array('tweet_id', 'author_id', 'original_tweet', 'clean_tweet', 'created_dtm'); 
+		    fputcsv($f, $fields, $delimiter); 
+		     
+		    // Output each row of the data, format line as csv and write to file pointer 
+		    foreach ($data_tweets as $key) {
+		    	$key->original_tweet = str_replace("\n", "", $key->original_tweet);
+				$key->original_tweet = str_replace("\r", "", $key->original_tweet);
+
+				$key->clean_tweet = str_replace("\n", "", $key->clean_tweet);
+				$key->clean_tweet = str_replace("\r", "", $key->clean_tweet);
+
+		    	$lineData = array(
+		    		$key->tweet_id, 
+		    		$key->author_id,
+		    		$key->original_tweet,
+		    		$key->clean_tweet,
+		    		$key->created_dtm
+		    	); 
+		        fputcsv($f, $lineData, $delimiter); 
+		    }
+		     
+		    // Move back to beginning of file 
+		    fseek($f, 0); 
+		     
+		    // Set headers to download file rather than displayed 
+		    header('Content-Type: text/csv'); 
+		    header('Content-Disposition: attachment; filename="' . $filename . '";'); 
+		     
+		    //output all remaining data on a file pointer 
+		    fpassthru($f); 
+		}
+
+		
 	}
 }

@@ -44,6 +44,18 @@ class M_data_tweets extends CI_Model {
         return $results;
     }
 
+    public function getTrainTweetsOnly()
+    {
+        $query = "SELECT a.* 
+        FROM t_data_tweets a
+        LEFT OUTER JOIN `t_data_uji` u ON a.`tweet_id` = u.`tweet_id`
+        WHERE (u.`tweet_id` IS NULL)";
+
+        $results = $this->db->query($query)->result();
+
+        return $results;
+    }
+
     public function delete_all()
     {
         $this->db->truncate('t_data_tweets');

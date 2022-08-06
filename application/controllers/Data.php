@@ -34,7 +34,7 @@ class Data extends CI_Controller {
 	{
 		$this->load->model('m_data_tweets');
 
-		$data_tweets 	= $this->m_data_tweets->getAllTweets();
+		$data_tweets 	= $this->m_data_tweets->getTrainTweetsOnly();
 
 		$data['content'] 		= 'pages/v_data_latih';
 		$data['menu']			= 'data_latih';

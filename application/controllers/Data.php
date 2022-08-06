@@ -60,6 +60,16 @@ class Data extends CI_Controller {
 
 	public function hasil_uji()
 	{
+		$this->load->model('m_data_uji');
+
+		$data['data_uji']		= $this->m_data_uji->getAllTweets();
+		$data['content'] 		= 'pages/v_hasil_uji';
+		$data['menu']			= 'hasil_uji';
+		$this->load->view('layouts/v_layout', $data);
+	}
+
+	public function analyze_data_uji()
+	{
 		$ctx = stream_context_create(array('http'=>
 		    array(
 		        'timeout' => 1200,  //1200 Seconds is 20 Minutes
@@ -68,12 +78,7 @@ class Data extends CI_Controller {
 		$result 	= file_get_contents('http://127.0.0.1:4996/analyzeNaiveBayes', false, $ctx);
 		$response 	= json_decode($result);
 
-		$this->load->model('m_data_uji');
-
-		$data['data_uji']		= $this->m_data_uji->getAllTweets();
-		$data['content'] 		= 'pages/v_hasil_uji';
-		$data['menu']			= 'hasil_uji';
-		$this->load->view('layouts/v_layout', $data);
+		redirect('data/hasil_uji');
 	}
 
 	public function chart()

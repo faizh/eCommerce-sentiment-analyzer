@@ -4,6 +4,11 @@
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Hasil Uji Naivebayes</h6>
+
+                            <a href="<?= base_url() ?>index.php/data/analyze_data_uji"><button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#getTweet">
+                              Analyze Tweets
+                            </button></a>
+
                             <div class="table-responsive">
                                 <table class="table" id="example">
                                     <thead>

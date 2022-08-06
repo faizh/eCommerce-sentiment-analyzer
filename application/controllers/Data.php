@@ -1,5 +1,6 @@
 <?php
 ini_set('max_execution_time', 0);
+error_reporting(0);
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Data extends CI_Controller {
@@ -124,6 +125,69 @@ class Data extends CI_Controller {
 	public function import_data_tweet()
 	{
 		$this->load->model('m_data_tweets');
+
+		$filename=$_FILES["file_csv"]["tmp_name"];
+		$i = 0;
+		$file = fopen($filename, "r");
+		$file_check = fopen($filename, "r");
+		$file_check_count=count(fgetcsv($file_check,10000,','));
+		if ($file_check_count != 3) {
+			$file_separator = ';';
+		}else{
+			$file_separator = ',';
+		}
+
+		$arr_data = array();
+		while (($emapData = fgetcsv($file, 10000, $file_separator)) !== FALSE)
+		{
+			$i++;
+			$cek[]=1;
+			if ($i==1) {
+				if (count($emapData) !== 4) {
+					echo "Kolom tidak sesuai";exit();
+				}
+			} else{
+				if($i==1) continue;
+				$tweet_id			= trim(str_replace("'","''",$emapData[0])); //replace ' jadi '' 
+				$clean_tweet 		= trim(str_replace("'","''",$emapData[1])); //replace ' jadi '' 
+				$date 				= trim(str_replace("'","''",$emapData[2])); //replace ' jadi '' 
+				$sentiment 			= strtolower(trim(str_replace("'","''",$emapData[3]))); //replace ' jadi '' 
+
+				$check = $this->m_data_tweets->getByAttributes(array("tweet_id" => $tweet_id));
+
+				if (count($check) > 0) {
+					continue;
+					echo "skip ".$tweet_id;
+				}
+
+				if ($sentiment == 1) {
+					$sentiment = 'positive';
+				}elseif ($sentiment == -1) {
+					$sentiment = 'negative';
+				}else{
+					$sentiment = 'neutral';
+				}
+
+				$arr_data = array(
+					"tweet_id"			=> $tweet_id,
+					"tweet_author_id" 	=> 1,
+					"original_tweet" 	=> "",
+					"clean_tweet"		=> $clean_tweet,
+					"polarity"			=> $sentiment,
+					"sentiment"			=> $sentiment,
+					"created_dtm"		=> $date
+				);
+
+				$this->m_data_tweets->insert($arr_data);
+			}
+		}
+
+		redirect('data/data_latih');
+	}
+
+	public function import_data_tweet_old()
+	{
+		$this->load->model('m_data_tweets');
 		$this->load->model('m_data_uji');
 
 		$start_date 	= $this->input->post('start_date');
@@ -185,11 +249,14 @@ class Data extends CI_Controller {
 	{
 		$this->load->model(array(
 			'm_data_tweets',
-			'm_data_uji'
+			'm_data_uji',
+			'm_data'
 		));
 
+		$presentase_data_uji = $this->input->post('presentase_data_uji');
+
 		$this->m_data_uji->delete_all();
-		$random_tweets = $this->m_data_tweets->getRandomTweets();
+		$random_tweets = $this->m_data_tweets->getRandomTweets($presentase_data_uji);
 
 		foreach ($random_tweets as $tweet) {
 			$data_uji = array(
@@ -200,6 +267,8 @@ class Data extends CI_Controller {
 
 			$this->m_data_uji->insert($data_uji);
 		}
+
+		$this->m_data->update_presentase($presentase_data_uji);
 
 		redirect('data/data_uji');
 	}

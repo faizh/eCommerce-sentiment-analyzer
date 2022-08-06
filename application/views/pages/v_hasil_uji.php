@@ -11,6 +11,7 @@
                                             <th scope="col" width="70%">Tweet</th>
                                             <th scope="col" width="15%">Sentiment</th>
                                             <th scope="col" width="15%">Naivebayes</th>
+                                            <th scope="col" width="15%">Textblob</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -22,15 +23,22 @@
                                             <?php }else{
                                                 foreach ($data_uji as $tweet) {
                                                     if ($tweet->sentiment != $tweet->naive_bayes_analysis) {
-                                                        $class = "warning";
+                                                        $class_nb = "warning";
                                                     }else{
-                                                        $class = "success";
+                                                        $class_nb = "success";
+                                                    }
+
+                                                    if ($tweet->sentiment != $tweet->textblob_analysis) {
+                                                        $class_tb = "warning";
+                                                    }else{
+                                                        $class_tb = "success";
                                                     }
                                                  ?>
                                                     <tr>
                                                         <td><?= $tweet->clean_tweet ?></td>
                                                         <td><?= $tweet->sentiment ?></td>
-                                                        <td><button class="btn btn-<?= $class ?>"><?= $tweet->naive_bayes_analysis ?></button></td>
+                                                        <td><button class="btn btn-<?= $class_nb ?>"><?= $tweet->naive_bayes_analysis ?></button></td>
+                                                        <td><button class="btn btn-<?= $class_tb ?>"><?= $tweet->textblob_analysis ?></button></td>
                                                     </tr>
                                             <?php }
                                             } 

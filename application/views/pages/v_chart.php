@@ -16,10 +16,10 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th>Textblob</th>
-                                            <td><?= $data_tweets['data_count_test']->textblob_positive ?></td>
-                                            <td><?= $data_tweets['data_count_test']->textblob_negative ?></td>
-                                            <td><?= $data_tweets['data_count_test']->textblob_neutral ?></td>
+                                            <th>Manual</th>
+                                            <td><?= $data_tweets['data_count_test']->manual_positive ?></td>
+                                            <td><?= $data_tweets['data_count_test']->manual_negative ?></td>
+                                            <td><?= $data_tweets['data_count_test']->manual_neutral ?></td>
                                         </tr>
                                         <tr>
                                             <th>Naivebayes</th>
@@ -27,8 +27,14 @@
                                             <td><?= $data_tweets['data_count_test']->nb_negative ?></td>
                                             <td><?= $data_tweets['data_count_test']->nb_neutral ?></td>
                                         </tr>
+                                        <tr>
+                                            <th>TextBlob</th>
+                                            <td><?= $data_tweets['data_count_test']->tb_positive ?></td>
+                                            <td><?= $data_tweets['data_count_test']->tb_negative ?></td>
+                                            <td><?= $data_tweets['data_count_test']->tb_neutral ?></td>
+                                        </tr>
                                     </tbody>
-                                    <tfoot>
+                                    <!-- <tfoot>
                                         <tr>
                                             <th class="d-none d-xl-table-cell">Selisih</th>
                                             <td><?= abs($data_tweets['data_count_test']->textblob_positive - $data_tweets['data_count_test']->nb_positive) ?></td>
@@ -38,7 +44,7 @@
                                         <tr>
                                             <th colspan="4">Akurasi Naivebayes : <?=  $data_tweets['accuracy'] * 100 ?>%</th>
                                         </tr>
-                                    </tfoot>
+                                    </tfoot> -->
                                 </table>
                             </div>
                         </div>

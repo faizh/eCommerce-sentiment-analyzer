@@ -18,4 +18,10 @@ class M_data extends CI_Model {
     {
         $this->db->truncate('t_data');
     }
+
+    public function update_presentase($presentase)
+    {
+        $this->db->set('presentase_data_uji', $presentase);
+        $this->db->update('t_data');
+    }
 }

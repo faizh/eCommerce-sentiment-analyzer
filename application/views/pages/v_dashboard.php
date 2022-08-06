@@ -18,7 +18,7 @@
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Data Latih</p>
-                                <h6 class="mb-0">90%</h6>
+                                <h6 class="mb-0"><?= 100 - $presentase_data_uji ?>%</h6>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Data Uji</p>
-                                <h6 class="mb-0">10%</h6>
+                                <h6 class="mb-0"><?= $presentase_data_uji ?>%</h6>
                             </div>
                         </div>
                     </div>

@@ -3,9 +3,29 @@
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Data Latih</h6>
-                            <a href="<?= base_url() ?>index.php/data/create_data_uji"><button class="btn btn-primary">Get Data Uji</button></a>
-                            </br>
+                            <h6 class="mb-4">Data Uji</h6>
+
+                            <form action="<?= base_url() ?>index.php/data/create_data_uji" method="post">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" name="presentase_data_uji">
+                                            <option selected="" disabled>Presentase Data Uji</option>
+                                            <option value="10">10%</option>
+                                            <option value="20">20%</option>
+                                            <option value="30">30%</option>
+                                            <option value="40">40%</option>
+                                        </select> 
+                                    </col>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary">Get Data Uji</button>
+                                    </div>
+                                </div>
+                                </br>
+                            </form></br>
+                            
                             <div class="table-responsive">
                                 <table class="table" id="example">
                                     <thead>

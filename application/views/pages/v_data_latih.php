@@ -4,24 +4,41 @@
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Data Latih</h6>
-                            <form method="post" action="<?= base_url() ?>index.php/data/import_data_tweet">
-                                <div class="row">
-                                    <div class="card-body col-2">
-                                        <label>Start Date</label>
-                                        <input type="date" name="start_date" class="form-control" placeholder="Input" required>
-                                    </div>
-                                    <div class="card-body col-2">
-                                        <label>End Date</label>
-                                        <input type="date" name="end_date" class="form-control" placeholder="Input" required>
-                                    </div>
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <form method="post" action="<?= base_url() ?>index.php/data/import_data_tweet" enctype="multipart/form-data">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Import Data Latih</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Upload file CSV
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="file" name="file_csv" accept=".csv" >
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                      </div>
+                                  </form>
                                 </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <button type="submit" class="btn btn-primary m-2">Import Data Twitter</button>
-                                    </div>
-                                </div>
-                            </br>
-                            </form>
+                              </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#exampleModalCenter">
+                              Import Data Latih
+                            </button>
+                            
                             <div class="table-responsive">
                                 <table class="table" id="example">
                                     <thead>
